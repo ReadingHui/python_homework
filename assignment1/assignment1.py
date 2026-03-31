@@ -8,6 +8,8 @@ def greet(name: str) -> str:
 
 # Task 3: Calculator
 def calc(a, b, operation='multiply') -> int | float:
+    if not isinstance(a, (int, float, complex)) or not isinstance(b, (int, float, complex)):
+        raise TypeError("a and b must be numbers.")
     match operation:
         case "add":
             try:
@@ -48,12 +50,6 @@ def calc(a, b, operation='multiply') -> int | float:
         case _:
             raise ValueError("Operation must be from ['add', 'subtract', 'multiply', 'divide', 'modulo', 'int_divide']")
     return
-'''
-Remark: 
-According to the task requirement, these are the error to be caught. 
-However, this "calc" function doesn't really make sense if the input are strings and list etc.,
-but the program can still function properly due to native support of operators in Python.
-'''
 
 # Task 4: Data Type Conversion
 def data_type_conversion(value, type: str):
