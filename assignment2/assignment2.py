@@ -86,3 +86,137 @@ print(employee_dict(employees['rows'][1]))
 print()
 
 # Task 9: A dict of dicts, for All Employees
+def all_employees_dict():
+    return{row[employee_id_column]: employee_dict(row) for row in employees['rows']}
+
+print('Task 9 result:')
+print('All Employees Dictionary:')
+print(all_employees_dict())
+print()
+
+# Task 10: Use the os Module
+def get_this_value():
+    return os.getenv('THISVALUE')
+print('Task 10 result:')
+print(f'THISVALUE: {get_this_value()}')
+print()
+
+# Task 11: Creating Your Own Module
+import custom_module
+
+def set_that_secret(new_secret):
+    custom_module.set_secret(new_secret)
+
+set_that_secret('Open Sesame!')
+print('Task 11 result:')
+print(f'New secret: {custom_module.secret}')
+print()
+
+# Task 12: Read minutes1.csv and minutes2.csv
+def read_minutes():
+    minutes1_path = os.path.join(PARENT_DIR, 'csv', 'minutes1.csv')
+    minutes2_path = os.path.join(PARENT_DIR, 'csv', 'minutes2.csv')
+    minutes1 = {}
+    minutes2 = {}
+    try:
+        rows = []
+        with open(minutes1_path, 'r') as f:
+            reader = csv.reader(f)
+            for i, row in enumerate(reader):
+                if i == 0:
+                    minutes1['fields'] = row
+                else:
+                    rows.append(tuple(row))
+            minutes1['rows'] = rows
+    except Exception as e:
+        trace_back = traceback.extract_tb(e.__traceback__)
+        stack_trace = list()
+        for trace in trace_back:
+            stack_trace.append(f'File : {trace[0]} , Line : {trace[1]}, Func.Name: {trace[2]}, Message : {trace[3]}')
+        print(f'Exception type: {type(e).__name__}')
+        message = str(e)
+        if message:
+            print(f"Exception message: {message}")
+        print(f'Stack trace: {stack_trace}')
+
+    try:
+        rows = []
+        with open(minutes2_path, 'r') as f:
+            reader = csv.reader(f)
+            for i, row in enumerate(reader):
+                if i == 0:
+                    minutes2['fields'] = row
+                else:
+                    rows.append(tuple(row))
+            minutes2['rows'] = rows
+    except Exception as e:
+        trace_back = traceback.extract_tb(e.__traceback__)
+        stack_trace = list()
+        for trace in trace_back:
+            stack_trace.append(f'File : {trace[0]} , Line : {trace[1]}, Func.Name: {trace[2]}, Message : {trace[3]}')
+        print(f'Exception type: {type(e).__name__}')
+        message = str(e)
+        if message:
+            print(f"Exception message: {message}")
+        print(f'Stack trace: {stack_trace}')
+
+    return minutes1, minutes2
+
+minutes1, minutes2 = read_minutes()
+print('Task 12 result:')
+print('minutes1: ')
+print(minutes1)
+print('minutes2: ')
+print(minutes2)
+print()
+
+# Task 13: Create minutes_set
+def create_minutes_set():
+    set1 = set(minutes1['rows'])
+    set2 = set(minutes2['rows'])
+    res_set = set1.union(set2)
+    return res_set
+
+minutes_set = create_minutes_set()
+print('Task 13 result:')
+print('minutes_set:')
+print(minutes_set)
+print()
+
+# Task 14: Convert to datetime
+from datetime import datetime
+
+def create_minutes_list():
+    minutes_list = list(minutes_set)
+    minutes_list = list(map(lambda x: (x[0], datetime.strptime(x[1], '%B %d, %Y')), minutes_list))
+    return minutes_list
+
+minutes_list = create_minutes_list()
+print('Task 14 result:')
+print('minutes_list:')
+print(minutes_list)
+print()
+
+# Task 15: Write Out Sorted List
+def write_sorted_list():
+    sorted_list = sorted(minutes_list, key=lambda x: x[1])
+    sorted_list = list(map(lambda x: (x[0], datetime.strftime(x[1], '%B %d, %Y')), sorted_list))
+    try:
+        rows = []
+        with open('minutes.csv', 'w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(minutes1['fields'])
+            writer.writerows(sorted_list)
+    except Exception as e:
+        trace_back = traceback.extract_tb(e.__traceback__)
+        stack_trace = list()
+        for trace in trace_back:
+            stack_trace.append(f'File : {trace[0]} , Line : {trace[1]}, Func.Name: {trace[2]}, Message : {trace[3]}')
+        print(f'Exception type: {type(e).__name__}')
+        message = str(e)
+        if message:
+            print(f"Exception message: {message}")
+        print(f'Stack trace: {stack_trace}')
+    return sorted_list
+
+write_sorted_list()
