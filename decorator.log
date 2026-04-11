@@ -1,0 +1,12 @@
+function: nothing_function
+positional parameters: []
+keyword parameters: {}
+return: None
+function: true_function
+positional parameters: [1, 2, 'one', True, [1, 2]]
+keyword parameters: {}
+return: True
+function: kw_func
+positional parameters: []
+keyword parameters: {'kw1': 'x', 'kw2': 2}
+return: <function logger_decorator at 0x0000026A56274680>
