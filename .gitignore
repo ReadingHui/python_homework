@@ -8,3 +8,4 @@ CACHEDIR.TAG
 .venv
 Lib/
 Scripts/
+.ctd_python_ess
