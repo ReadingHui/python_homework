@@ -6,6 +6,6 @@ __pycache__
 .vscode
 CACHEDIR.TAG
 .venv
-Lib
-Scripts
-.ctd-homework
+Lib/
+Scripts/
+.ctd_python_ess
