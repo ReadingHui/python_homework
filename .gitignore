@@ -1,8 +1,4 @@
-.idea
-+.DS_Store*
+# Created by venv; see https://docs.python.org/3/library/venv.html
+.ctd-homework
 .pytest_cache
-__pycache__/
-*.rb
-.vscode
-CACHEDIR.TAG
-.venv/
+__pycache__
