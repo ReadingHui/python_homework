@@ -1,10 +1,11 @@
 .idea
 +.DS_Store*
 .pytest_cache
-__pycache__/
+__pycache__
 *.rb
 .vscode
 CACHEDIR.TAG
 .venv
-Lib/
-Scripts/
+Lib
+Scripts
+.ctd-homework
