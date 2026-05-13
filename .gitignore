@@ -1,14 +1,11 @@
 .idea
 +.DS_Store*
 .pytest_cache
-__pycache__/
+__pycache__
 *.rb
 .vscode
 CACHEDIR.TAG
-.venv/
-Lib/
-Scripts/
-# Created by venv; see https://docs.python.org/3/library/venv.html
+.venv
+Lib
+Scripts
 .ctd-homework
-.pytest_cache
-__pycache__
