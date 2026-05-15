@@ -27,14 +27,14 @@ def add_subscribers(cursor, name, address):
         if "UNIQUE constraint failed" in str(e):
             print(f"{(name, address)} is already in the database.")
 
-def add_subscriptions(cursor, subscriber_id, magazine_id):
+def add_subscriptions(cursor, subscriber_id, magazine_id, expiration_date):
     try:
-        cursor.execute("INSERT INTO Subscriptions (subscriber_id, magazine_id) VALUES (?, ?)", (subscriber_id, magazine_id))
+        cursor.execute("INSERT INTO Subscriptions (subscriber_id, magazine_id, expiration_date) VALUES (?, ?, ?)", (subscriber_id, magazine_id, expiration_date))
     except sqlite3.IntegrityError as e:
         if "NOT NULL constraint failed" in str(e):
-            print(f"Missing subscriber_id or magazine_id.")
+            print(f"Missing subscriber_id, magazine_id or expiration_date.")
         if "UNIQUE constraint failed" in str(e):
-            print(f"{(subscriber_id, magazine_id)} is already in the database.")
+            print(f"{(subscriber_id, magazine_id, expiration_date)} is already in the database.")
 
 def main():
     # Task 1: Create a New SQLite Database
@@ -81,7 +81,7 @@ def main():
         CREATE TABLE IF NOT EXISTS Subscribers (
             id INTEGER PRIMARY KEY,
             name TEXT NOT NULL,
-            address TEXT,
+            address TEXT NOT NULL,
             UNIQUE(name, address)
         )
         """)
@@ -95,9 +95,10 @@ def main():
             id INTEGER PRIMARY KEY,
             subscriber_id INTEGER NOT NULL,
             magazine_id INTEGER NOT NULL,
+            expiration_date TEXT NOT NULL,
             FOREIGN KEY (subscriber_id) REFERENCES Subscribers (id),
             FOREIGN KEY (magazine_id) REFERENCES Magazines (id),
-            UNIQUE (subscriber_id, magazine_id)
+            UNIQUE (subscriber_id, magazine_id, expiration_date)
         )
         """)
     except sqlite3.Error as e:
@@ -140,19 +141,19 @@ def main():
     ]
 
     subscriptions_data = [
-        (1, 1),
-        (1, 2),
-        (2, 2),
-        (3, 3),
-        (4, 4),
-        (5, 5),
-        (6, 6),
-        (7, 7),
-        (8, 8),
-        (9, 9),
-        (1, 3),
-        (5, 2),
-        (4, 5)
+        (1, 1, 'October 8, 2026'),
+        (1, 2, 'February 14, 2027'),
+        (2, 2, 'July 29, 2028'),
+        (3, 3, 'April 3, 2029'),
+        (4, 4, 'January 7, 2038'),
+        (5, 5, 'August 19, 2035'),
+        (6, 6, 'May 22, 2033'),
+        (7, 7, 'September 30, 2040'),
+        (8, 8, 'December 25, 2046'),
+        (9, 9, 'November 12, 2031'),
+        (1, 3, 'June 15, 2043'),
+        (5, 2, 'September 18, 2055'),
+        (4, 5, 'March 11, 2050')
     ]
 
     for p in publishers_data:
@@ -171,7 +172,7 @@ def main():
     add_publishers(cursor, 'Global Media') # Should throw the IntegrityError for duplicate
     add_subscribers(cursor, 'Alice Smith', '123 Pine St') # Should throw the IntegrityError for duplicate
     add_magazines(cursor, 'Ghost Magazine', 99) # Should throw IntegrityError because of the Foreign Key
-    add_subscriptions(cursor, 1, 1) # Should throw the IntegrityError for duplicate
+    add_subscriptions(cursor, 1, 1, 'October 8, 2026') # Should throw the IntegrityError for duplicate
     
     # Commit the change
     conn.commit()
@@ -185,7 +186,7 @@ def main():
         SELECT * FROM Subscribers;
         """,
         """
-        SELECT name FROM Magazines
+        SELECT * FROM Magazines
         ORDER BY name;
         """,
         """
