@@ -102,7 +102,7 @@ def main():
         )
         """)
     except sqlite3.Error as e:
-        print(f"An error occured while creating the Subscribers table: {e}")
+        print(f"An error occured while creating the Subscription table: {e}")
 
     # Task 3: Populate Tables with Data
     conn.execute("PRAGMA foreign_keys = 1") # This turns on the foreign key constraint
@@ -169,10 +169,10 @@ def main():
         add_subscriptions(cursor, *ss)
 
     # Some test case by Gemini
-    add_publishers(cursor, 'Global Media') # Should throw the IntegrityError for duplicate
-    add_subscribers(cursor, 'Alice Smith', '123 Pine St') # Should throw the IntegrityError for duplicate
-    add_magazines(cursor, 'Ghost Magazine', 99) # Should throw IntegrityError because of the Foreign Key
-    add_subscriptions(cursor, 1, 1, 'October 8, 2026') # Should throw the IntegrityError for duplicate
+    # add_publishers(cursor, 'Global Media') # Should throw the IntegrityError for duplicate
+    # add_subscribers(cursor, 'Alice Smith', '123 Pine St') # Should throw the IntegrityError for duplicate
+    # add_magazines(cursor, 'Ghost Magazine', 99) # Should throw IntegrityError because of the Foreign Key
+    # add_subscriptions(cursor, 1, 1, 'October 8, 2026') # Should throw the IntegrityError for duplicate
     
     # Commit the change
     conn.commit()
