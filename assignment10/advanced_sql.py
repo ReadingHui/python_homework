@@ -15,8 +15,8 @@ def main():
         ON o.order_id = li.order_id
         LEFT JOIN products AS p
         ON li.product_id = p.product_id
-        GROUP BY li.order_id
-        ORDER BY li.order_id
+        GROUP BY o.order_id
+        ORDER BY o.order_id
         LIMIT 5;
         """
 
@@ -105,6 +105,10 @@ def main():
         for row in check_res:
             print(row)
         print()
+
+        # Clean up the inserted lines
+        cursor.execute("DELETE FROM line_items WHERE line_item_id > 1109")
+        cursor.execute("DELETE FROM orders WHERE order_id > 249")        
         
         # Task 4: Aggregation with HAVING
         agg_q = """
