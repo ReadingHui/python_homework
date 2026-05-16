@@ -1,5 +1,4 @@
 import sqlite3
-import pandas as pd
 
 LESSON_DB = '../db/lesson.db'
 
