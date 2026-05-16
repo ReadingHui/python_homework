@@ -5,11 +5,14 @@ LESSON_DB = '../db/lesson.db'
 
 def main():
     with sqlite3.connect(LESSON_DB) as conn:
+        conn.execute("PRAGMA foreign_keys = 1;")
         cursor = conn.cursor()
 
         # Task 1: Complex JOINs with Aggregation
         query = """
-        SELECT li.order_id, li.quantity * p.price AS total_price FROM line_items as li
+        SELECT o.order_id, li.quantity * p.price AS total_price FROM orders AS o
+        LEFT JOIN line_items as li
+        ON o.order_id = li.order_id
         LEFT JOIN products AS p
         ON li.product_id = p.product_id
         GROUP BY li.order_id
@@ -30,9 +33,11 @@ def main():
         ON li.product_id = p.product_id
         GROUP BY li.order_id)
 
-        SELECT o.customer_id, AVG(cte.total_price) AS average_price FROM orders AS o
+        SELECT c.customer_name, AVG(cte.total_price) AS average_price FROM orders AS o
         LEFT JOIN cte
         ON o.order_id = cte.order_id
+        LEFT JOIN customers AS c
+        ON o.customer_id = c.customer_id
         GROUP BY o.customer_id;
         """
 
@@ -103,7 +108,7 @@ def main():
         
         # Task 4: Aggregation with HAVING
         agg_q = """
-        SELECT e.first_name, e.last_name, COUNT(o.order_id) AS order_counts FROM employees AS e
+        SELECT e.employee_id, e.first_name, e.last_name, COUNT(o.order_id) AS order_counts FROM employees AS e
         LEFT JOIN orders AS o
         ON e.employee_id = o.employee_id
         GROUP BY e.employee_id
