@@ -10,7 +10,7 @@ def main():
 
         # Task 1: Complex JOINs with Aggregation
         query = """
-        SELECT o.order_id, li.quantity * p.price AS total_price FROM orders AS o
+        SELECT o.order_id, SUM(li.quantity * p.price) AS total_price FROM orders AS o
         LEFT JOIN line_items as li
         ON o.order_id = li.order_id
         LEFT JOIN products AS p
@@ -33,7 +33,7 @@ def main():
         ON li.product_id = p.product_id
         GROUP BY li.order_id)
 
-        SELECT c.customer_name, AVG(cte.total_price) AS average_price FROM orders AS o
+        SELECT c.customer_name, AVG(cte.total_price) AS average_total_price FROM orders AS o
         LEFT JOIN cte
         ON o.order_id = cte.order_id
         LEFT JOIN customers AS c
