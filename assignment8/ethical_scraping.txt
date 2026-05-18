@@ -1,0 +1,21 @@
+1. Which sections of the website are restricted for crawling?
+
+/w/
+/api/
+/trap/
+/wiki/Special:
+/wiki/Spezial:
+/wiki/Spesial:
+/wiki/Special%3A
+/wiki/Spezial%3A
+/wiki/Spesial%3A
+
+and some administrative page/forum, as well as blacklist are also restricted.
+
+2. Are there specific rules for certain user agents?
+
+Yes, like SemrushBot has a 5s crawl delay.
+
+3. Why websites use `robots.txt` and write 2-3 sentences explaining its purpose and how it promotes ethical scraping.
+
+Websites uses `robots.txt` to pose rules against web-scrapping bots. It is kind of a announcement of the rules on how the site can be crawled, so that the ethical bots will not eat up all the resources to the site, as well as protecting the site from being copied.

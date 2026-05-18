@@ -9,3 +9,4 @@ CACHEDIR.TAG
 Lib/
 Scripts/
 .ctd_python_ess
+share/
