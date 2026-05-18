@@ -8,26 +8,32 @@ def greet(name: str) -> str:
 
 # Task 3: Calculator
 def calc(a, b, operation='multiply') -> int | float:
-    if not isinstance(a, (int, float, complex)) or not isinstance(b, (int, float, complex)):
-        raise TypeError("a and b must be numbers.")
+    def check_number(a, b):
+        if not isinstance(a, (int, float, complex)) or not isinstance(b, (int, float, complex)):
+            raise TypeError("a and b must be numbers.")
+        return
     match operation:
         case "add":
             try:
+                check_number(a, b)
                 return a + b
             except TypeError:
                 return "You can't add those values!"
         case "subtract":
             try:
+                check_number(a, b)
                 return a - b
             except TypeError:
                 return "You can't subtract those values!"
         case "multiply":
             try:
+                check_number(a, b)
                 return a * b
             except TypeError:
                 return "You can't multiply those values!"
         case "divide":
             try:
+                check_number(a, b)
                 return a / b
             except TypeError:
                 return "You can't divide those values!"
@@ -35,6 +41,7 @@ def calc(a, b, operation='multiply') -> int | float:
                 return "You can't divide by 0!"
         case "modulo":
             try:
+                check_number(a, b)
                 return a % b
             except TypeError:
                 return "You can't modulo those values!"
@@ -42,13 +49,22 @@ def calc(a, b, operation='multiply') -> int | float:
                 return "You can't divide by 0!"
         case "int_divide":
             try:
+                check_number(a, b)
                 return a // b
             except TypeError:
                 return "You can't divide those values!"
             except ZeroDivisionError:
                 return "You can't divide by 0!"
+        case "power":
+            try:
+                check_number(a, b)
+                return a ** b
+            except TypeError:
+                return "You can't raise powers with those values!"
+            except ZeroDivisionError:
+                return "You can't divide by 0!"
         case _:
-            raise ValueError("Operation must be from ['add', 'subtract', 'multiply', 'divide', 'modulo', 'int_divide']")
+            raise ValueError("Operation must be from ['add', 'subtract', 'multiply', 'divide', 'modulo', 'int_divide', 'power']")
     return
 
 # Task 4: Data Type Conversion
